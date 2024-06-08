@@ -1,7 +1,10 @@
 import { OnModuleInit } from '@nestjs/common';
 
-export type AmqpExchange = 'direct_payments_exchange' | 'direct_payments_dlx';
-export type AmqpRoutingKey = 'payment_event';
+export type AmqpExchange =
+  | 'direct_orders_to_convert_exchange'
+  | 'direct_orders_to_convert_exchange_dlx';
+
+export type AmqpRoutingKey = 'order_event';
 
 export abstract class AmqpServiceDTO implements OnModuleInit {
   public abstract publishInExchange(
