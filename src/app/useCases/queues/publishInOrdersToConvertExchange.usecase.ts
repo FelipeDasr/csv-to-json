@@ -1,11 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AmqpServiceDTO } from '../../dtos/amqp';
-
-interface IOrderEvent {
-  clientWebSocketId: string;
-  internalFilename: string;
-  originalFilename: string;
-}
+import { AmqpServiceDTO, IOrderEvent } from '../../dtos/amqp';
 
 @Injectable()
 export class PublishInOrdersToConvertExchangeUseCase {

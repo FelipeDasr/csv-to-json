@@ -2,7 +2,12 @@ import { Injectable } from '@nestjs/common';
 
 import { configureAmqp } from './utils/configure';
 
-import { AmqpExchange, AmqpRoutingKey, AmqpServiceDTO } from '../../dtos/amqp';
+import {
+  AmqpExchange,
+  AmqpQueue,
+  AmqpRoutingKey,
+  AmqpServiceDTO,
+} from '../../dtos/amqp';
 import * as amqplib from 'amqplib';
 
 @Injectable()
@@ -37,6 +42,22 @@ export class AmqpService extends AmqpServiceDTO {
       exchange,
       routingKey,
       this.parseObjectToBuffer(content),
+    );
+  }
+
+  public async cunsumeQueue(
+    queueName: AmqpQueue,
+    callback: (payload: object) => Promise<boolean>,
+  ) {
+    await this.channel.consume(
+      queueName,
+      async (message_: amqplib.ConsumeMessage) => {
+        const payload_ = JSON.parse(message_.content.toString());
+        const executionResult = await callback(payload_);
+
+        if (executionResult) this.channel.ack(message_);
+        else this.channel.nack(message_, true, false);
+      },
     );
   }
 }

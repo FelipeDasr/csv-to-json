@@ -5,8 +5,19 @@ export type AmqpExchange =
   | 'direct_orders_to_convert_exchange_dlx';
 
 export type AmqpRoutingKey = 'order_event';
+export type AmqpQueue = 'order_events' | 'order_events_dlq';
+
+export interface IOrderEvent {
+  clientWebSocketId: string;
+  internalFilename: string;
+  originalFilename: string;
+}
 
 export abstract class AmqpServiceDTO implements OnModuleInit {
+  public abstract cunsumeQueue(
+    queueName: AmqpQueue,
+    callback: (payload: object) => Promise<boolean>,
+  ): Promise<void>;
   public abstract publishInExchange(
     exchange: AmqpExchange,
     routingKey: AmqpRoutingKey,
