@@ -4,6 +4,7 @@ import { AmqpServiceDTO } from 'src/app/dtos/amqp';
 import { AmqpService } from './amqp.service';
 
 import { PublishInOrdersToConvertExchangeUseCase } from 'src/app/useCases/queues/publishInOrdersToConvertExchange.usecase';
+import { ConsumeOrdersQueueUseCase } from 'src/app/useCases/queues/consumeOrdersQueue.usecase';
 
 @Module({
   providers: [
@@ -12,7 +13,12 @@ import { PublishInOrdersToConvertExchangeUseCase } from 'src/app/useCases/queues
       useClass: AmqpService,
     },
     PublishInOrdersToConvertExchangeUseCase,
+    ConsumeOrdersQueueUseCase,
   ],
-  exports: [AmqpServiceDTO, PublishInOrdersToConvertExchangeUseCase],
+  exports: [
+    AmqpServiceDTO,
+    PublishInOrdersToConvertExchangeUseCase,
+    ConsumeOrdersQueueUseCase,
+  ],
 })
 export class AmqplibModule {}
