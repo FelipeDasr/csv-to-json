@@ -14,6 +14,10 @@ export function deleteFile(
   fs.unlinkSync(path.resolve(tempFolderPath, scope, filename));
 }
 
+export function getTempPath(scope: TempFolderScope) {
+  return path.resolve(tempFolderPath, scope);
+}
+
 export function saveFile(
   filename: string,
   buffer: Buffer,
