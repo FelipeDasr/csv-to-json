@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/modules/app.module';
+import { AppModule } from './app/modules/app/app.module';
 
 import { createTempFolderIfNotExists } from './core/utils/files';
 
