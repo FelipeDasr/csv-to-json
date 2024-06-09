@@ -5,20 +5,21 @@ import * as fs from 'fs';
 
 type TempFolderScope = 'public' | 'private';
 
+const tempFolderPath = path.resolve(__dirname, '..', '..', 'static', 'temp');
+
+export function deleteFile(
+  filename: string,
+  scope: TempFolderScope = 'private',
+) {
+  fs.unlinkSync(path.resolve(tempFolderPath, scope, filename));
+}
+
 export function saveFile(
   filename: string,
   buffer: Buffer,
   scope: TempFolderScope = 'private',
 ) {
-  const filePath = path.resolve(
-    __dirname,
-    '..',
-    '..',
-    'static',
-    'temp',
-    scope,
-    filename,
-  );
+  const filePath = path.resolve(tempFolderPath, scope, filename);
 
   return new Promise((resolve) => {
     // Save file to disk (temp folder)
@@ -33,15 +34,7 @@ export function getFileStream(
   filename: string,
   scope: TempFolderScope = 'private',
 ) {
-  const filePath = path.resolve(
-    __dirname,
-    '..',
-    '..',
-    'static',
-    'temp',
-    scope,
-    filename,
-  );
+  const filePath = path.resolve(tempFolderPath, scope, filename);
 
   return fs.createReadStream(filePath, 'utf-8');
 }
