@@ -3,10 +3,12 @@ import { InternalServerErrorException } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 
+type TempFolderScope = 'public' | 'private';
+
 export function saveFile(
   filename: string,
   buffer: Buffer,
-  scope: 'public' | 'private' = 'private',
+  scope: TempFolderScope = 'private',
 ) {
   const filePath = path.resolve(
     __dirname,
@@ -25,6 +27,23 @@ export function saveFile(
       return resolve(null);
     });
   });
+}
+
+export function getFileStream(
+  filename: string,
+  scope: TempFolderScope = 'private',
+) {
+  const filePath = path.resolve(
+    __dirname,
+    '..',
+    '..',
+    'static',
+    'temp',
+    scope,
+    filename,
+  );
+
+  return fs.createReadStream(filePath, 'utf-8');
 }
 
 function createFolderIfNotExists(path_: string) {
