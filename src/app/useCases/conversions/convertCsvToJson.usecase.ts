@@ -3,20 +3,46 @@ import { Injectable } from '@nestjs/common';
 import { IOrderEvent } from 'src/app/dtos/amqp';
 
 import * as CsvParser from 'csv-parser';
-import { getFileStream, saveFile } from 'src/core/utils/files';
+import { deleteFile, getFileStream, saveFile } from 'src/core/utils/files';
+
+import { WebSocketsGateway } from 'src/core/gateways/websocket.gateway';
 
 @Injectable()
 export class ConvertCsvToJsonUsecase {
-  constructor() {}
+  constructor(private readonly webSocketsGateway: WebSocketsGateway) {}
 
   public async execute(order: IOrderEvent): Promise<boolean> {
     return new Promise(async (resolve) => {
-      await this.convertCsvToJson(order);
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      // Check if the client is still connected
+      const clientIsConnected = this.webSocketsGateway.clientIsConnected(
+        order.clientWebSocketId,
+      );
+
+      // If the client is not connected, we don't need to convert the file
+      if (!clientIsConnected) {
+        deleteFile(order.internalFilename, 'private');
+        return resolve(true);
+      }
+
+      const jsonFileName = await this.convertCsvToJson(order);
+
+      // Notify the client that the file is ready
+      this.webSocketsGateway.emitToClient(
+        order.clientWebSocketId,
+        'order:done',
+        {
+          jsonFileURL: `${process.env.APP_HOST}/download/${jsonFileName}`,
+        },
+      );
+
+      deleteFile(order.internalFilename, 'private');
       return resolve(true);
     });
   }
 
-  private async convertCsvToJson(order: IOrderEvent) {
+  private async convertCsvToJson(order: IOrderEvent): Promise<string> {
     return new Promise(async (resolve, reject) => {
       const separator = await this.getSeparator(order.internalFilename);
       const fileStream = getFileStream(order.internalFilename, 'private');
@@ -27,7 +53,11 @@ export class ConvertCsvToJsonUsecase {
         const fileData = JSON.stringify(data, null, 2);
         const fileBuffer = Buffer.from(fileData);
 
-        const filename = order.originalFilename.replace('.csv', '.json');
+        const internalName = order.internalFilename.replace('.csv', '');
+        const filename = order.originalFilename.replace(
+          '.csv',
+          `_${internalName}.json`,
+        );
         await saveFile(filename, fileBuffer, 'public');
         resolve(filename);
       };
