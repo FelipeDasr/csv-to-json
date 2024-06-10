@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script
+      src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+      integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/global.css" />
+    <link rel="stylesheet" href="./styles/headers.css" />
+    <link rel="stylesheet" href="./styles/containers.css" />
+    <title>Conversor</title>
+    <script src="./scripts/index.js" defer></script>
+  </head>
+  <body>
+    <header class="pageHeader">
+      <img src="./assets/csvFile.svg" alt="Ícone de um arquivo .CSV" />
+      <h2>CSV para JSON</h2>
+    </header>
+    <main class="mainContainer">
+      <h1>Converter arquivos CSV para JSONs CSV</h1>
+      <section class="formContainer">
+        <label for="fileInput">Selecionar arquivo</label>
+        <input
+          type="file"
+          id="fileInput"
+          accept="text/csv, application/vnd.ms-excel"
+        />
+      </section>
+      <section class="outputContainer" id="outputContainer">
+        <b>Arquivos</b>
+        <div class="filesContainer" id="filesContainer"></div>
+      </section>
+    </main>
+  </body>
+</html>
