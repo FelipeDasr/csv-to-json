@@ -4,6 +4,7 @@
   color: var(--primary);
   font-family: 'Open Sans', sans-serif;
   text-decoration: none;
+  overflow-x: hidden;
 }
 
 :root {

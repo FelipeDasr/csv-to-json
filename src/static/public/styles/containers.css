@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  min-height: 70vh;
 }
 
 .mainContainer > h1 {
@@ -73,7 +74,7 @@
 
 .fileName {
   font-size: 1rem;
-  width: 20rem;
+  width: 20.1rem;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -83,7 +84,21 @@
 .fileStatus {
   font-size: 0.9rem;
   margin-right: 0.5rem;
-  width: 5rem;
+  width: 5.5rem;
+}
+
+@media (max-width: 500px) {
+  .fileBody {
+    width: 23rem;
+  }
+
+  .fileStatus {
+    width: 6rem;
+  }
+
+  .fileName {
+    width: 8rem;
+  }
 }
 
 .downloadButtonContainer {
@@ -100,4 +115,14 @@
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+}
+
+.pageFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  width: 100vw;
+  border-top: 1px solid var(--lightGray);
+  height: 4rem;
 }
