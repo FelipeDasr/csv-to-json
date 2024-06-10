@@ -1,0 +1,14 @@
+.pageHeader {
+  width: 100vw;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 9px 13px 0px rgba(0, 0, 0, 0.1);
+  border-bottom: 0.5px solid var(--lightGray);
+  margin-bottom: 1rem;
+}
+
+.pageHeader > img {
+  height: 2rem;
+  margin: 0 1.5rem;
+}

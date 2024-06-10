@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: var(--primary);
+  font-family: 'Open Sans', sans-serif;
+  text-decoration: none;
+}
+
+:root {
+  --primary: #1e3050;
+  --lightGray: #d8d8d8;
+  --green: #54aa53;
+}

@@ -1,0 +1,103 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.mainContainer > h1 {
+  margin: 2rem;
+  font-size: 2rem;
+}
+
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.formContainer > input[type='file'] {
+  display: none;
+}
+
+.formContainer > label {
+  padding: 1rem;
+  width: 11rem;
+  background-color: var(--primary);
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.outputContainer {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem;
+}
+
+.outputContainer > b {
+  margin-bottom: 3rem;
+}
+
+.filesContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fileBody {
+  display: flex;
+  height: 3.05rem;
+  min-width: 21rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.fileBody > img {
+  height: 1.5rem;
+  margin: 0 0.5rem;
+}
+
+.fileName {
+  font-size: 1rem;
+  width: 20rem;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.fileStatus {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  width: 5rem;
+}
+
+.downloadButtonContainer {
+  width: 4.5rem;
+  margin: 0 0.5rem;
+}
+
+.downloadButton {
+  display: none;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  background-color: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
