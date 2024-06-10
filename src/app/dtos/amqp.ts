@@ -8,6 +8,7 @@ export type AmqpRoutingKey = 'order_event';
 export type AmqpQueue = 'order_events' | 'order_events_dlq';
 
 export interface IOrderEvent {
+  processId: string;
   clientWebSocketId: string;
   internalFilename: string;
   originalFilename: string;

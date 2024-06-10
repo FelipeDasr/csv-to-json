@@ -13,8 +13,6 @@ export class ConvertCsvToJsonUsecase {
 
   public async execute(order: IOrderEvent): Promise<boolean> {
     return new Promise(async (resolve) => {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-
       // Check if the client is still connected
       const clientIsConnected = this.webSocketsGateway.clientIsConnected(
         order.clientWebSocketId,
@@ -33,6 +31,7 @@ export class ConvertCsvToJsonUsecase {
         order.clientWebSocketId,
         'order:done',
         {
+          processId: order.processId,
           jsonFileURL: `${process.env.APP_HOST}/download/${jsonFileName}`,
         },
       );

@@ -21,7 +21,7 @@ import { IUploadFileToConversionRequest } from 'src/app/dtos/requests';
 import { SaveFileToConversionUsecase } from 'src/app/useCases/saveFileToConversion.usecase';
 
 const fileValidatorSchema = {
-  allowedMimeTypes: ['text/csv'],
+  allowedMimeTypes: ['text/csv', 'application/vnd.ms-excel'],
   maxSizeInBytes: 1024 * 1024 * 50, // 50mb
 };
 

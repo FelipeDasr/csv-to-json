@@ -21,15 +21,18 @@ export class SaveFileToConversionUsecase {
     const { clientWebsocketId } = bodyRequest;
 
     await saveFile(file.internalFileName, file.buffer, 'private');
+    const processId = internalFileName.replace('.csv', '');
 
     await this.publishInOrdersToConvertExchangeUseCase.execute({
       clientWebSocketId: clientWebsocketId,
       internalFilename: internalFileName,
       originalFilename: originalname,
+      processId,
     });
 
     return {
       message: 'File uploaded successfully and is being processed',
+      processId,
     };
   }
 }
