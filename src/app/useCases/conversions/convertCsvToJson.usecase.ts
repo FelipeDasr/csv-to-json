@@ -24,6 +24,15 @@ export class ConvertCsvToJsonUsecase {
         return resolve(true);
       }
 
+      // Notify the client that the file is being processed
+      this.webSocketsGateway.emitToClient(
+        order.clientWebSocketId,
+        'order:processing',
+        {
+          processId: order.processId,
+        },
+      );
+
       const jsonFileName = await this.convertCsvToJson(order);
 
       // Notify the client that the file is ready
