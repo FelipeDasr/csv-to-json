@@ -2,8 +2,10 @@ version: '3.8'
 
 services:
   rabbitmq:
-    image: rabbitmq:3-management-alpine
     container_name: csv-to-json-rabbitmq
+    build:
+      context: . # ou o diretório onde está o Dockerfile
+      dockerfile: dockerfiles/RabbitMQDockerFile
 
     ports:
       - 5672:5672
