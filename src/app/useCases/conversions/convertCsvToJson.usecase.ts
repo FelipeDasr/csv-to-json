@@ -6,10 +6,14 @@ import * as CsvParser from 'csv-parser';
 import { deleteFile, getFileStream, saveFile } from 'src/core/utils/files';
 
 import { WebSocketsGateway } from 'src/core/gateways/websocket.gateway';
+import { PublishInOrdersToDeleteQueueUsecase } from '../queues/publishInOrdersToDeleteQueue.usecase';
 
 @Injectable()
 export class ConvertCsvToJsonUsecase {
-  constructor(private readonly webSocketsGateway: WebSocketsGateway) {}
+  constructor(
+    private readonly publishInOrdersToDeleteQueueUsecase: PublishInOrdersToDeleteQueueUsecase,
+    private readonly webSocketsGateway: WebSocketsGateway,
+  ) {}
 
   public async execute(order: IOrderEvent): Promise<boolean> {
     return new Promise(async (resolve) => {
@@ -45,7 +49,11 @@ export class ConvertCsvToJsonUsecase {
         },
       );
 
+      // Delete the .csv file
       deleteFile(order.internalFilename, 'private');
+      // Delete the converted .json file after 10 minutes
+      this.publishInOrdersToDeleteQueueUsecase.execute(order, 1000 * 60 * 10);
+
       return resolve(true);
     });
   }
