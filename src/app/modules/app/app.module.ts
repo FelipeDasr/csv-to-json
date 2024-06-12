@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { AmqplibModule } from '../amqp/amqp.module';
 import { HttpModule } from '../http/http.module';
 
+import { DeleteConvertedFileUsecase } from 'src/app/useCases/files/deleteConvertedFile.usecase';
 import { ConvertCsvToJsonUsecase } from 'src/app/useCases/conversions/convertCSVToJSON.usecase';
 import { WebSocketsGateway } from 'src/core/gateways/websocket.gateway';
 import { AppService } from './app.service';
@@ -20,6 +21,11 @@ import * as path from 'path';
       renderPath: '/',
     }),
   ],
-  providers: [AppService, WebSocketsGateway, ConvertCsvToJsonUsecase],
+  providers: [
+    AppService,
+    WebSocketsGateway,
+    ConvertCsvToJsonUsecase,
+    DeleteConvertedFileUsecase,
+  ],
 })
 export class AppModule {}
