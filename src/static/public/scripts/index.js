@@ -15,6 +15,10 @@ socket.on('order:done', (data) => {
   showDownloadButton(data.processId, data.jsonFileURL);
 });
 
+socket.on('order:deleted', (data) => {
+  disableDownloadButton(data.processId);
+});
+
 // Detect file input change
 document.getElementById('fileInput').onchange = async (event) => {
   document.getElementById('outputContainer').style.display = 'flex';
@@ -61,7 +65,7 @@ function addFileComponent(processId, filename) {
 
 /**
  * @param {string} processId
- * @param {'waiting' | 'processing' | 'done'} status
+ * @param {'waiting' | 'processing' | 'done' | 'deleted'} status
  */
 function updateFileStatus(processId, status) {
   let statusText = '';
@@ -71,18 +75,25 @@ function updateFileStatus(processId, status) {
     case 'waiting':
       statusText = 'Aguardando';
       break;
+
     case 'processing':
       statusText = 'Processando';
       break;
+
     case 'done':
       statusText = 'Concluído';
       iconName = 'done';
       break;
+
+    case 'deleted':
+      statusText = 'Expirado';
+      iconName = 'bloqued';
   }
 
+  const iconImage = document.getElementById(`fileProcessIcon_${processId}`);
+
   document.getElementById(`fileStatus_${processId}`).innerText = statusText;
-  document.getElementById(`fileProcessIcon_${processId}`).src =
-    `./assets/${iconName}.svg`;
+  iconImage.src = `./assets/${iconName}.svg`;
 }
 
 // Download file handling
@@ -99,4 +110,14 @@ function showDownloadButton(processId, fileUrl) {
   downloadButton.href = fileUrl;
 
   updateFileStatus(processId, 'done');
+}
+
+/**
+ * @param {string} processId
+ */
+function disableDownloadButton(processId) {
+  const downloadButton = document.getElementById(`downloadFile_${processId}`);
+  downloadButton.style.display = 'none';
+
+  updateFileStatus(processId, 'deleted');
 }
