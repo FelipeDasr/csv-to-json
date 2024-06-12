@@ -37,11 +37,20 @@ export class AmqpService extends AmqpServiceDTO {
     exchange: AmqpExchange,
     routingKey: AmqpRoutingKey,
     content: object,
+    xDelay?: number,
   ) {
     this.channel.publish(
       exchange,
       routingKey,
       this.parseObjectToBuffer(content),
+      // Apply x-delay header if xDelay is defined
+      xDelay
+        ? {
+            headers: {
+              'x-delay': xDelay,
+            },
+          }
+        : undefined,
     );
   }
 
