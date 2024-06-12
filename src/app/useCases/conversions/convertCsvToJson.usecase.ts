@@ -52,7 +52,7 @@ export class ConvertCsvToJsonUsecase {
       // Delete the .csv file
       deleteFile(order.internalFilename, 'private');
       // Delete the converted .json file after 10 minutes
-      this.publishInOrdersToDeleteQueueUsecase.execute(order, 1000 * 10 * 1);
+      this.publishInOrdersToDeleteQueueUsecase.execute(order, 1000 * 60 * 10);
 
       return resolve(true);
     });
