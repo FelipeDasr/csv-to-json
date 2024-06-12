@@ -69,6 +69,10 @@ Acesse a aplicação em [http://localhost:3000](http://localhost:3000) para test
 
 ![Demo](./docs/assets/frontend-1.gif)
 
+Exemplo de um arquivo convertido expirado:
+
+![Demo](./docs/assets/frontend-2.png)
+
 ---
 
 ## Instalação
